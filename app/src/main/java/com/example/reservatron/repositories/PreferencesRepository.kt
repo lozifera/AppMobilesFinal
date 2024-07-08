@@ -18,4 +18,14 @@ object PreferencesRepository {
         )
         return sharedPref?.getString("token", null)
     }
+
+    fun logout(context: Context?) {
+        val sharedPref = context?.getSharedPreferences(
+            "proyecto-final", Context.MODE_PRIVATE
+        )
+        with(sharedPref?.edit()) {
+            this?.remove("token")
+            this?.apply()
+        }
+    }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import com.example.reservatron.R
 import com.example.reservatron.adapter.RestauranteAdapter
 import com.example.reservatron.databinding.ActivityListaRestauranteBinding
 import com.example.reservatron.model.login.Restaurant
+import com.example.reservatron.repositories.PreferencesRepository
 import com.example.reservatron.ui.viewModel.ListaRestauranteViewModel
 
 class ListaRestauranteActivity : AppCompatActivity(), RestauranteAdapter.OnRestaurantClickListener{
@@ -63,10 +65,43 @@ class ListaRestauranteActivity : AppCompatActivity(), RestauranteAdapter.OnResta
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.itmCrearR) {
-            val intent = Intent(this, FormRestActivity::class.java)
+        val token = PreferencesRepository.getToken(this)
+
+        if (token == null) {
+            Toast.makeText(this, "Debes iniciar sesión para acceder a esta función", Toast.LENGTH_SHORT).show()
+            // Redirigir al usuario a RegistroActivity
+            val intent = Intent(this, RegistroActivity::class.java)
             startActivity(intent)
+
             return true
+            return true
+        }
+
+        when (item.itemId) {
+            R.id.itmCrearR -> {
+                val intent = Intent(this, FormRestActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.itm_mis_res -> {
+                val intent = Intent(this, MisResActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.item_reservas -> {
+                val intent = Intent(this, MisReservasActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.item_cerrar -> {
+                // Cerrar la sesión del usuario
+                PreferencesRepository.logout(this)
+                Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()  // This will remove this activity from the stack
+                return true
+            }
         }
 
         return super.onOptionsItemSelected(item)

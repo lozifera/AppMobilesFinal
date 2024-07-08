@@ -3,8 +3,12 @@ package com.example.reservatron.api
 
 import com.example.reservatron.model.login.LisMenus
 import com.example.reservatron.model.login.Photo
+import com.example.reservatron.model.login.ReservaList
+import com.example.reservatron.model.login.ReservacionRequestDTO
+import com.example.reservatron.model.login.ReservacionResponseDTO
 import com.example.reservatron.model.login.Restaurant
 import com.example.reservatron.model.login.RestaurantInsert
+import com.example.reservatron.model.login.RestauranteFiltroDTO
 import com.example.reservatron.model.login.Restaurantes
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -28,38 +32,71 @@ interface APIrestaurantes {
     fun getRestauranteById(
         @Path("id") id: Int
     ): Call<Restaurant>
-    @POST("api/restaurants")
-    fun insertRestaurante(@Header("Authorization") token: String, @Body restaurante: RestaurantInsert): Call<Restaurant>
+    @POST("restaurants")
+    fun insertRestaurante(
+        @Body restaurant: RestaurantInsert
+    ): Call<Void>
 
-    // Actualizar información del restaurante
-    @PUT("api/restaurants/{id}")
-    fun updateRestaurante(@Header("Authorization") token: String, @Path("id") id: Int, @Body restaurante: Restaurant): Call<Restaurant>
+    @GET("restaurants")
+    fun getRestauranterByUsuario(): Call<Restaurantes>
 
-    // Eliminar un restaurante
-    @DELETE("api/restaurants/{id}")
-    fun deleteRestaurante(@Header("Authorization") token: String, @Path("id") id: Int): Call<Void>
+    @DELETE("restaurants/{id}")
+    fun deleteRestaurante(
+        @Path("id") id: Int
+    ): Call<Void>
 
-    // Subir foto de galería para el restaurante
-    @Multipart
-    @POST("api/restaurants/{id}/photo")
-    fun uploadRestaurantePhoto(
-        @Header("Authorization") token: String,
-        @Path("id") id: Int,
-        @Part photo: MultipartBody.Part
-    ): Call<Photo>
 
-    // Subir logo del restaurante
-    @Multipart
-    @POST("api/restaurants/{id}/logo")
-    fun uploadRestauranteLogo(
-        @Header("Authorization") token: String,
-        @Path("id") id: Int,
-        @Part logo: MultipartBody.Part
-    ): Call<Photo>
     @GET("restaurants/{id}/menu")
     fun getMenuById(
         @Path("id") id: Int
     ): Call<LisMenus>
+    @PUT("restaurants/{id}")
+    fun editRestaurante(
+        @Path("id") id: Int,
+        @Body restaurante: RestaurantInsert
+    ): Call<Void>
 
+
+    @Multipart
+    @POST("restaurants/{id}/logo")
+    fun uploadLogo(
+        @Path("id") id: Int,
+        @Part logo: MultipartBody.Part
+    ): Call<Void>
+
+    @Multipart
+    @POST("restaurants/{id}/photo")
+    fun uploadGallery(
+        @Path("id") id: Int,
+        @Part gallery: MultipartBody.Part
+    ): Call<Void>
+
+    @POST("restaurants/search")
+    fun getRestaurantesFiltered(
+        @Body filter: RestauranteFiltroDTO
+    ): Call<Restaurantes>
+
+    @POST("restaurants")
+    fun createRestaurant(
+        @Body restaurant: RestaurantInsert
+    ): Call<Void>
+
+    @POST("reservations")
+    fun makeReservation(
+        @Body reservation: ReservacionRequestDTO
+    ): Call<ReservacionResponseDTO>
+
+    @GET("reservations")
+    fun getReservas(): Call<ReservaList>
+
+    @POST("reservations/{id}/cancel")
+    fun cancelReservation(
+        @Path("id") id: Long
+    ): Call<Void>
+
+    @GET("restaurants/{id}/reservations")
+    fun getReservasByRestaurante(
+        @Path("id") id: Int
+    ): Call<ReservaList>
 
 }

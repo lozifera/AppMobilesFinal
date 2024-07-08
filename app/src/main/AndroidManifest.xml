@@ -15,6 +15,18 @@
         android:theme="@style/Theme.Reservatron"
         tools:targetApi="31">
         <activity
+            android:name=".ui.main.MisReservasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.SubirImagenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.MisResActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.MenusActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.VistaRestActivity"
             android:exported="false" />
         <activity

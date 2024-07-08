@@ -1,5 +1,6 @@
 package com.example.reservatron.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -35,6 +36,7 @@ class VistaRestActivity : AppCompatActivity(), PhotoAdapter.OnPhotoClickListener
         }
         setupViewModelObservers()
         setUpRecyclerView()
+        setUpListeners()
 
         //conseguimos el id del restaurante
         idRestaurante = intent.getIntExtra("restauranteId", -1)
@@ -47,6 +49,13 @@ class VistaRestActivity : AppCompatActivity(), PhotoAdapter.OnPhotoClickListener
 
     }
 
+    private fun setUpListeners() {
+        binding.infoBtn.setOnClickListener {
+            val intent = Intent(this, MenusActivity::class.java)
+            intent.putExtra("restauranteId", idRestaurante)
+            startActivity(intent)
+        }
+    }
 
 
     private fun setupViewModelObservers() {

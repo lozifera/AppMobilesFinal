@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Otros colores ya definidos -->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <!-- Colores adicionales que necesitas definir -->
+    <color name="secondary_text_color">#757575</color> <!-- Cambia este valor al color deseado -->
+
+    <!-- Otros colores definidos -->
+    <color name="background_color">#F5F5F5</color>
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#666666</color>
+    <color name="button_panel_bg">#FFFFFF</color>
 </resources>

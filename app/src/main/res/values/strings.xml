@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Reservatron</string>
+
+    <string name="restaurant_photo">Foto del restaurante</string>
 </resources>
